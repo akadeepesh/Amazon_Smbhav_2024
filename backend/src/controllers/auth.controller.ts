@@ -2,6 +2,11 @@ import { Request, Response } from 'express';
 import { pool } from '../app';
 import { hashPassword, comparePasswords, generateToken } from '../utils/auth.utils';
 import { UserInput } from '../types/user.types';
+const expiryToMs = (expiry:string) => {
+  const hours = parseInt(expiry.replace('h', ''));
+  return hours * 60 * 60 * 1000;
+};
+
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -52,13 +57,14 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const user = result.rows[0];
     const token = generateToken({ id: user.id, email: user.email });
+    // Convert "24h" to milliseconds
 
     // Set JWT cookie
     res.cookie('jwt', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: expiryToMs(process.env.JWT_EXPIRY!), // 24 hours
     });
 
     res.status(201).json({
@@ -106,7 +112,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: expiryToMs(process.env.JWT_EXPIRY!),// 24 hours
     });
 
     res.json({
