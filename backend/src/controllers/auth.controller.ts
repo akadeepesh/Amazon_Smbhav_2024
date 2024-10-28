@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { pool } from '../app';
 import { hashPassword, comparePasswords, generateToken } from '../utils/auth.utils';
 import { UserInput } from '../types/user.types';
-const expiryToMs = (expiry:string) => {
-  const hours = parseInt(expiry.replace('h', ''));
-  return hours * 60 * 60 * 1000;
-};
+import ms from 'ms';
+// const expiryToMs = (expiry:string) => {
+//   const hours = parseInt(expiry.replace('h', ''));
+//   return hours * 60 * 60 * 1000;
+// };
 
 
 export const register = async (req: Request, res: Response): Promise<void> => {
@@ -64,7 +65,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: expiryToMs(process.env.JWT_EXPIRY!), // 24 hours
+      maxAge: ms(process.env.JWT_EXPIRY!), // 24 hours
     });
 
     res.status(201).json({
@@ -112,7 +113,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: expiryToMs(process.env.JWT_EXPIRY!),// 24 hours
+      maxAge: ms(process.env.JWT_EXPIRY!),// 24 hours
     });
 
     res.json({
