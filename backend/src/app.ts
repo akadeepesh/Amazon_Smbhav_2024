@@ -1,14 +1,14 @@
-import express, { Express } from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
-import { Pool } from 'pg';
-import authRoutes from './routes/auth.routes';
+import express, { Express } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import { Pool } from "pg";
+import authRoutes from "./routes/auth.routes";
 
 dotenv.config();
 
 const app: Express = express();
-const PORT =  3000;
+const PORT = 3000;
 
 // PostgreSQL configuration
 const pool = new Pool({
@@ -23,10 +23,10 @@ const pool = new Pool({
 // Database connection test
 pool.connect((err, client, release) => {
   if (err) {
-    console.error('Error acquiring client', err.stack);
+    console.error("Error acquiring client", err.stack);
     return;
   }
-  console.log('Successfully connected to PostgreSQL database');
+  console.log("Successfully connected to PostgreSQL database");
   release();
 });
 
@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
