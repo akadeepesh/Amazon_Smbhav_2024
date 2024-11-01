@@ -1,0 +1,91 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Check TypeScript, Formatting, and Linting in Parallel
+  check-code:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Use Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: "18"
+
+      # Cache dependencies for faster runs
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check TypeScript
+        run: npx tsc --noEmit
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Lint
+        run: npm run lint
+
+  # Build Job - Only runs after check-code job is successful
+  build:
+    runs-on: ubuntu-latest
+    needs: check-code
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Use Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: "18"
+
+      # Reuse cached dependencies for building
+      - name: Restore Node.js modules cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      # Cache Docker layers for faster image builds
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /path/to/docker-layer-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Build Docker image
+        run: docker build -t sambhav .
+
+      - name: Run Docker image
+        run: docker run -d -p 3000:3000 sambhav
+
+      - name: Check if Docker container is running
+        run: docker ps | grep sambhav
