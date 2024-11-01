@@ -1,24 +1,34 @@
 import express from 'express';
-import cors from 'cors';
-import { userRoutes } from './modules/user/user.route';
-// import { userRoutes } from './modules/user/user.route';
+import mongoose from 'mongoose';
+
+import { globalErrorHandler } from './utils/error-handler';
+import { authRoutes } from './routes/auth.routes';
+import { config } from './config';
 
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Routes
-app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
 
-// Global error handler
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send({
-    success: false,
-    message: err.message,
-  });
-});
+// Error handling
+app.use(globalErrorHandler);
+
+// MongoDB Connection
+mongoose
+  .connect(config.mongodbUri)
+  .then(() => {
+    console.log(`Connected to MongoDB`);
+    // Start the server after successful DB connection
+    const PORT = config.port || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 export default app;
