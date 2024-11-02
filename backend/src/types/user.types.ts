@@ -1,11 +1,12 @@
-export interface User {
-  id: number;
+import { Document } from 'mongoose';
+
+export interface IUser {
   email: string;
   password: string;
-  created_at: Date;
+  name: string;
+  createdAt: Date;
 }
 
-export interface UserInput {
-  email: string;
-  password: string;
+export interface IUserDocument extends IUser, Document {
+  comparePassword(password: string): Promise<boolean>;
 }

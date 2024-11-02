@@ -1,12 +1,11 @@
-// src/routes/auth.routes.ts
-import { Router } from "express";
-import { register, login, logout } from "../controllers/auth.controller";
-import { verifyToken } from "../middlewares/auth.middleware";
+import { Router } from 'express';
+import * as authController from '../controllers/auth.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
 
-router.post("/register", register);
-router.post("/login", login);
-router.post("/logout", verifyToken, logout);
+router.post('/register', authController.register);
+router.post('/login', authController.login);
+router.get('/profile', authMiddleware, authController.getProfile);
 
-export default router;
+export const authRoutes = router;
