@@ -1,3 +1,4 @@
+// models/user.model.ts
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { IUserDocument } from '../types/user.types';
@@ -14,20 +15,24 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     type: String,
     required: true,
     minlength: 6,
+    select: false
   },
   name: {
     type: String,
     required: true,
     trim: true,
   },
+  videos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Video'
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-
+  }
 }, {
-  timestamps: true,  
-  collection: 'users',  
+  timestamps: true,
+  collection: 'users',
 });
 
 userSchema.pre('save', async function(next) {

@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { globalErrorHandler } from './utils/error-handler';
 import { authRoutes } from './routes/auth.routes';
 import { config } from './config';
+import { videoRoutes } from './routes/videos.routes';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/videos', videoRoutes);
 
 // Error handling
 app.use(globalErrorHandler);
