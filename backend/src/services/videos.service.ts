@@ -1,5 +1,6 @@
 import { AppError } from '../utils/error-handler';
 import { User } from '../models/user.model';
+import { Video } from '../models/videos.model';
 
 export class VideoService {
   private isValidUrl(url: string): boolean {
@@ -18,6 +19,7 @@ export class VideoService {
     description?: string;
   }) {
     const { title, url, type, description } = videoData;
+    console.log(videoData);
 
     if (!title || !url || !type) {
       throw new AppError(400, 'Title, URL, and type are required');
@@ -31,11 +33,12 @@ export class VideoService {
       throw new AppError(400, 'Invalid video type. Must be either "file" or "link"');
     }
 
-    const video = await user.addVideo({
+    const video = await Video.create({
       title,
       url,
       type,
-      description
+      description,
+      owner: user._id
     });
 
     return video;

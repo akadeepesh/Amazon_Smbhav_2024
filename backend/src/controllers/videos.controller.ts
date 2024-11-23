@@ -3,12 +3,14 @@ import { AuthRequest } from '../types/request.types';
 import { catchAsync } from '../utils/catch-async';
 import { AppError } from '../utils/error-handler';
 import { VideoService } from '../services/videos.service';
+import { log } from 'console';
 
 
 const videoService = new VideoService();
 
-export const addVideo = catchAsync(async (req: AuthRequest, res: Response) => {
-  if (!req.user) {
+export const addVideo = catchAsync (async (req: AuthRequest, res: Response) => {
+  // console.log(req.user);
+   if (!req.user) {
     throw new AppError(401, 'Not authenticated');
   }
   console.log(req.user);
@@ -20,6 +22,7 @@ export const addVideo = catchAsync(async (req: AuthRequest, res: Response) => {
     status: 'success',
     data: { video }
   });
+  
 });
 
 export const getUserVideos = catchAsync(async (req: AuthRequest, res: Response) => {
