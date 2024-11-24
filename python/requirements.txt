@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+numpy
+opencv-python
+ultralytics
+ffmpeg-python
+pydub
+speechrecognition

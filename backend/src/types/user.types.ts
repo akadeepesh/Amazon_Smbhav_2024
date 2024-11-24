@@ -1,12 +1,12 @@
-import { Document } from 'mongoose';
 
-export interface IUser {
+
+export interface IUserDocument  {
+  _id: string;
   email: string;
   password: string;
   name: string;
+  
+  videos: string[];  // Array of Video ObjectIds
   createdAt: Date;
-}
-
-export interface IUserDocument extends IUser, Document {
   comparePassword(password: string): Promise<boolean>;
 }
