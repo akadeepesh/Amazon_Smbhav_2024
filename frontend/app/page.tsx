@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   FileText,
   Upload,
@@ -68,7 +66,6 @@ const Navbar: React.FC = () => {
 };
 
 const MediaUploadCard: React.FC = () => {
-  const [description, setDescription] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -141,7 +138,6 @@ const MediaUploadCard: React.FC = () => {
     setFiles([]);
     setApiResponse(null);
     setError("");
-    setDescription("");
     setVideoPreview("");
   };
 
