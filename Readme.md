@@ -1,4 +1,4 @@
-# Product Analyzer: AI-Powered Product Detection Platform
+# Automated Content Conversion Platform
 
 ## Overview
 An intelligent application that leverages machine learning to automatically detect and analyze products from uploaded video or image content, providing comprehensive product insights.
@@ -18,8 +18,8 @@ An intelligent application that leverages machine learning to automatically dete
 
 ### Frontend Setup
 ```bash
-git clone https://github.com/yourusername/product-analyzer.git
-cd product-analyzer
+git clone [https://github.com/yourusername/product-analyzer.git](https://github.com/akadeepesh/Amazon_Smbhav_2024)
+cd frontend
 npm install
 npm run dev
 ```
@@ -30,6 +30,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
+uvicorn app.main:app --reload
 
 ```
 
@@ -48,10 +49,6 @@ pip install -r requirements.txt
 - Size and type restrictions
 - Secure processing pipeline
 
-## Performance Optimization
-- Caching mechanism for repeated analyses
-- Asynchronous processing
-- Efficient ML model inference
 
 ## Contributing
 1. Fork the repository
