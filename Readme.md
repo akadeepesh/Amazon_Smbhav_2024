@@ -10,16 +10,8 @@ An intelligent application that leverages machine learning to automatically dete
 - 💰 Price Estimation
 - ✨ Key Feature Breakdown
 
-## Technology Stack
-- Frontend: React
-- UI Components: Shadcn/UI
-- Icons: Lucide React
-- State Management: React Hooks
-- Styling: Tailwind CSS
-
 ## Prerequisites
 - Node.js (v18+)
-- npm or yarn
 - Python (for backend ML models)
 
 ## Installation
@@ -38,7 +30,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
-python server.py
+
 ```
 
 ## Usage
