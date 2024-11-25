@@ -31,8 +31,6 @@ interface ApiResponse {
   products: Product[];
 }
 
-type UploadMode = "media" | "text";
-
 const Navbar: React.FC = () => {
   const isLogin = true;
   return (
@@ -70,7 +68,6 @@ const Navbar: React.FC = () => {
 };
 
 const MediaUploadCard: React.FC = () => {
-  const [selectedMode, setSelectedMode] = useState<UploadMode>("media");
   const [description, setDescription] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -159,53 +156,22 @@ const MediaUploadCard: React.FC = () => {
                 <FileText className="h-6 w-6 text-primary" />
                 <span className="text-lg font-semibold">Product Analyzer</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="mode-toggle" className="text-sm">
-                  {selectedMode === "media" ? "Text" : "Media"}
-                </Label>
-                <Switch
-                  id="mode-toggle"
-                  checked={selectedMode === "text"}
-                  onCheckedChange={() =>
-                    setSelectedMode((prev) =>
-                      prev === "media" ? "text" : "media"
-                    )
-                  }
-                />
-              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="mt-4">
-            {selectedMode === "media" ? (
-              <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
-                {videoPreview ? (
-                  <div className="w-full h-96 flex items-center justify-center">
-                    <video
-                      src={videoPreview}
-                      controls
-                      className="max-w-full max-h-full"
-                    />
-                  </div>
-                ) : (
-                  <FileUpload onChange={handleFileUpload} />
-                )}
-              </div>
-            ) : (
-              <div>
-                <Label htmlFor="description" className="sr-only">
-                  Description
-                </Label>
-                <textarea
-                  id="description"
-                  placeholder="Enter your description..."
-                  value={description}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                    setDescription(e.target.value)
-                  }
-                  className="min-h-[120px] resize-y w-full p-2 border-2 border-primary/20 rounded-md focus:ring-2 focus:ring-primary/50 transition-all"
-                />
-              </div>
-            )}
+            <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+              {videoPreview ? (
+                <div className="w-full h-96 flex items-center justify-center">
+                  <video
+                    src={videoPreview}
+                    controls
+                    className="max-w-full max-h-full"
+                  />
+                </div>
+              ) : (
+                <FileUpload onChange={handleFileUpload} />
+              )}
+            </div>
             {error && (
               <Alert variant="destructive" className="mt-4">
                 <AlertDescription>{error}</AlertDescription>
