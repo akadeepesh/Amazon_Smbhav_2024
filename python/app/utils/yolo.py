@@ -1,4 +1,4 @@
-from ultralytics import YOLO
+# from ultralytics import YOLO
 
 class YOLOv8Detector:
     """
@@ -9,5 +9,6 @@ class YOLOv8Detector:
     @staticmethod
     def get_model():
         if YOLOv8Detector._model is None:
-            YOLOv8Detector._model = YOLO("yolov8n.pt")  # Use the Nano model for speed
+            pass
+            # YOLOv8Detector._model = YOLO("yolov8n.pt")  # Use the Nano model for speed
         return YOLOv8Detector._model
