@@ -18,7 +18,7 @@ An intelligent application that leverages machine learning to automatically dete
 
 ### Frontend Setup
 ```bash
-git clone [https://github.com/yourusername/product-analyzer.git](https://github.com/akadeepesh/Amazon_Smbhav_2024)
+git clone https://github.com/akadeepesh/Amazon_Smbhav_2024
 cd frontend
 npm install
 npm run dev
