@@ -57,12 +57,6 @@ uvicorn app.main:app --reload
 4. Push to the branch
 5. Create a pull request
 
-## Future Roadmap
-- Multi-language support
-- Enhanced product database
-- Real-time price tracking
-- Expanded device compatibility
-
 ## Troubleshooting
 - Ensure all dependencies are installed
 - Check Python and Node.js versions
